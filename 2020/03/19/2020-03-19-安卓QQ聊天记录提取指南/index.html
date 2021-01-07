@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>安卓QQ聊天记录提取指南 | 117503445&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="前言此博客写于 2020.3.19 ，QQ版本 8.3.0 相关 Github 项目文件见 https:&#x2F;&#x2F;github.com&#x2F;117503445&#x2F;qq_get_message 如何获得数据库文件首先需要已经取得 ROOT 权限的 Android 手机，使用RE管理器或其他方式提取  &#x2F;data&#x2F;data&#x2F;com.tencent.mobileqq&#x2F;databases&#x2F;QQ号.db &#x2F;data&#x2F;d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓QQ聊天记录提取指南">
+<meta property="og:url" content="http://yoursite.com/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="117503445&#39;s Blog">
+<meta property="og:description" content="前言此博客写于 2020.3.19 ，QQ版本 8.3.0 相关 Github 项目文件见 https:&#x2F;&#x2F;github.com&#x2F;117503445&#x2F;qq_get_message 如何获得数据库文件首先需要已经取得 ROOT 权限的 Android 手机，使用RE管理器或其他方式提取  &#x2F;data&#x2F;data&#x2F;com.tencent.mobileqq&#x2F;databases&#x2F;QQ号.db &#x2F;data&#x2F;d">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-19T20:09:00.000Z">
+<meta property="article:modified_time" content="2021-01-07T11:35:49.611Z">
+<meta property="article:author" content="117503445">
+<meta name="twitter:card" content="summary">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/github-detective.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">117503445</h5>
+          <a href="mailto:t117503445@gmail.com" title="t117503445@gmail.com" class="mail">t117503445@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/117503445" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">安卓QQ聊天记录提取指南</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">安卓QQ聊天记录提取指南</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-19T20:09:00.000Z" itemprop="datePublished" class="page-time">
+  2020-03-19
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何获得数据库文件"><span class="post-toc-number">2.</span> <span class="post-toc-text">如何获得数据库文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#QQ号-IndexQQMsg-db"><span class="post-toc-number">3.</span> <span class="post-toc-text">QQ号-IndexQQMsg.db</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#QQ号-db"><span class="post-toc-number">4.</span> <span class="post-toc-text">QQ号.db</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#slowtable-QQ号-db"><span class="post-toc-number">5.</span> <span class="post-toc-text">slowtable_QQ号.db</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">6.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2020-03-19-安卓QQ聊天记录提取指南"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">安卓QQ聊天记录提取指南</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-19 20:09:00" datetime="2020-03-19T20:09:00.000Z"  itemprop="datePublished">2020-03-19</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>此博客写于 2020.3.19 ，QQ版本 8.3.0</p>
+<p>相关 Github 项目文件见 <a href="https://github.com/117503445/qq_get_message" target="_blank" rel="noopener">https://github.com/117503445/qq_get_message</a></p>
+<h2 id="如何获得数据库文件"><a href="#如何获得数据库文件" class="headerlink" title="如何获得数据库文件"></a>如何获得数据库文件</h2><p>首先需要已经取得 ROOT 权限的 Android 手机，使用RE管理器或其他方式提取</p>
+<ul>
+<li>/data/data/com.tencent.mobileqq/databases/QQ号.db</li>
+<li>/data/data/com.tencent.mobileqq/databases/slowtable_QQ号.db</li>
+<li>/data/data/com.tencent.mobileqq/databases/QQ号-IndexQQMsg.db</li>
+<li>/data/data/com.tencent.mobileqq/files/imei</li>
+</ul>
+<p>其中3个db文件都是Sqlite3数据库，在 Windows 上可以使用 Database.NET 等软件打开。</p>
+<p>接下来介绍如何获取聊天记录。</p>
+<h2 id="QQ号-IndexQQMsg-db"><a href="#QQ号-IndexQQMsg-db" class="headerlink" title="QQ号-IndexQQMsg.db"></a>QQ号-IndexQQMsg.db</h2><p>参考了 <a href="https://gist.github.com/recolic/02ba2e2dbae20f216c73b84baa91a39e" target="_blank" rel="noopener">https://gist.github.com/recolic/02ba2e2dbae20f216c73b84baa91a39e</a> 并修改脚本，简化操作。</p>
+<p>这个数据库储存了最近21天的数据。</p>
+<p>这个数据库没有进行加密，只进行了可逆的 Base64 编码，所以可以进行便捷的还原。</p>
+<p>我们需要的 数据Table 是 IndexContent_content</p>
+<p>将 Python3 脚本放在和 QQ号-IndexQQMsg.db 相同的路径</p>
+<p>修改 index_db_path 变量并运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import base64</span><br><span class="line">import datetime</span><br><span class="line">import sqlite3</span><br><span class="line"></span><br><span class="line">#输入一行,返回bool,决定是否保留这一行</span><br><span class="line">def _filter(line):</span><br><span class="line">    # return &#39;111222333&#39; in line</span><br><span class="line">    # return &#39;257112220&#39; in line</span><br><span class="line">    return True</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def decode_qtimestamp(s):</span><br><span class="line">    #    print(&#39;debug&#39;, s, file&#x3D;sys.stderr)</span><br><span class="line">    if s &#x3D;&#x3D; &#39;&#39;:</span><br><span class="line">        return 0</span><br><span class="line">    ts &#x3D; base64.b64decode(s)[4:8]</span><br><span class="line">    return sum([int(ts[i])*(256**(3-i)) for i in range(4)])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def timestamp_to_str(int_ts):</span><br><span class="line">    return datetime.datetime.fromtimestamp(int_ts).strftime(&#39;%Y-%m-%d %H:%M:%S&#39;)</span><br><span class="line"></span><br><span class="line">#IndexQQMsg.db的路径,请修改</span><br><span class="line">index_db_path &#x3D; &#39;&#123;QQ_Number&#125;-IndexQQMsg.db&#39;</span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    conn &#x3D; sqlite3.connect(index_db_path)</span><br><span class="line">    c &#x3D; conn.cursor()</span><br><span class="line">    lines &#x3D; c.execute(&#39;select * from IndexContent_content;&#39;)</span><br><span class="line"></span><br><span class="line">    with open(f&#39;&#123;index_db_path&#125;.txt&#39;, &#39;w&#39;, encoding&#x3D;&#39;utf8&#39;) as f:</span><br><span class="line">        for line in lines:</span><br><span class="line">            try:</span><br><span class="line">                timestamp &#x3D; timestamp_to_str(decode_qtimestamp(line[-1]))</span><br><span class="line">                lst &#x3D; [timestamp]</span><br><span class="line"></span><br><span class="line">                line &#x3D; line[:-1]</span><br><span class="line"></span><br><span class="line">                for i in [5, 6, 2]:</span><br><span class="line">                    lst.append(base64.b64decode(</span><br><span class="line">                        line[i]).decode(errors&#x3D;&#39;ignore&#39;))</span><br><span class="line">                lst[1] &#x3D; lst[1].replace(&#39;ZzZ0&#39;, &#39;&#39;).replace(&#39;ZzZ1&#39;, &#39;&#39;)</span><br><span class="line"></span><br><span class="line">                line &#x3D; &#39;|&#39;.join(lst)</span><br><span class="line">                if _filter(line):</span><br><span class="line">                    f.write(line+&#39;\n&#39;)</span><br><span class="line">            except:</span><br><span class="line">                pass</span><br></pre></td></tr></table></figure>
+
+<h2 id="QQ号-db"><a href="#QQ号-db" class="headerlink" title="QQ号.db"></a>QQ号.db</h2><p>参考了 <a href="https://github.com/roadwide/qqmessageorutput" target="_blank" rel="noopener">https://github.com/roadwide/qqmessageorutput</a> 并修改脚本，简化操作</p>
+<p>这个数据库储存了最近21天的数据。</p>
+<p>但是进行了异或加密。对于老版本的QQ，加密的Key就是手机的IMEI号，可以在 /data/data/com.tencent.mobileqq/files/imei 中查看。但是新版本中似乎更改了加密的key，可以参考 <a href="https://github.com/Yiyiyimu/QQ_History_Backup" target="_blank" rel="noopener">https://github.com/Yiyiyimu/QQ_History_Backup</a> 中的解决方案。</p>
+<p>每个好友占一个 Table，名字是 mr_friend_QQ号的MD5的16进制的字母大写</p>
+<p>每个群占一个 Table，名字是 mr_troop_QQ群号的MD5的16进制的字母大写</p>
+<p>将 Python3 脚本放在和 QQ号.db 相同的路径</p>
+<p>修改 dbfile 和 key 变量并运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line">from _overlapped import NULL</span><br><span class="line">import hashlib</span><br><span class="line">import sqlite3</span><br><span class="line">import time</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class QQoutput():</span><br><span class="line">    def __init__(self, db, key):</span><br><span class="line">        self.key &#x3D; key  # 解密用的密钥</span><br><span class="line">        self.c &#x3D; sqlite3.connect(db).cursor()</span><br><span class="line"></span><br><span class="line">    # msgdata mode&#x3D;0</span><br><span class="line">    # other mode&#x3D;1</span><br><span class="line">    def fix(self, data, mode):</span><br><span class="line">        if(mode &#x3D;&#x3D; 0):</span><br><span class="line">            rowbyte &#x3D; []</span><br><span class="line">            for i in range(0, len(data)):</span><br><span class="line">                rowbyte.append(data[i] ^ ord(self.key[i % len(self.key)]))</span><br><span class="line">            rowbyte &#x3D; bytes(rowbyte)</span><br><span class="line">            try:</span><br><span class="line">                msg &#x3D; rowbyte.decode(encoding&#x3D;&#39;utf-8&#39;)</span><br><span class="line">            except:</span><br><span class="line">                msg &#x3D; NULL</span><br><span class="line">            return msg</span><br><span class="line">        elif(mode &#x3D;&#x3D; 1):</span><br><span class="line">            str &#x3D; &#39;&#39;</span><br><span class="line">            try:</span><br><span class="line">                for i in range(0, len(data)):</span><br><span class="line">                    str +&#x3D; chr(ord(data[i]) ^ ord(self.key[i % len(self.key)]))</span><br><span class="line">            except:</span><br><span class="line">                str &#x3D; NULL</span><br><span class="line">            return str</span><br><span class="line"></span><br><span class="line">    def message(self, table_name):</span><br><span class="line">        execute &#x3D; f&#39;select msgData,senderuin,time from &#123;table_name&#125;&#39;</span><br><span class="line">        cursor &#x3D; self.c.execute(execute)</span><br><span class="line">        allmsg &#x3D; []</span><br><span class="line">        for row in cursor:</span><br><span class="line">            msgdata &#x3D; row[0]</span><br><span class="line">            uin &#x3D; row[1]</span><br><span class="line">            ltime &#x3D; time.localtime(row[2])</span><br><span class="line"></span><br><span class="line">            sendtime &#x3D; time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, ltime)</span><br><span class="line">            msg &#x3D; self.fix(msgdata, 0)</span><br><span class="line">            senderuin &#x3D; self.fix(uin, 1)</span><br><span class="line"></span><br><span class="line">            amsg &#x3D; []</span><br><span class="line">            amsg.append(sendtime)</span><br><span class="line">            amsg.append(senderuin)</span><br><span class="line">            amsg.append(msg)</span><br><span class="line">            allmsg.append(amsg)</span><br><span class="line">        return allmsg</span><br><span class="line"></span><br><span class="line">    def output(self, dbfile):</span><br><span class="line">        execute &#x3D; f&quot;SELECT name FROM sqlite_master WHERE type &#x3D;&#39;table&#39; AND (name LIKE &#39;mr_friend_%&#39; OR name LIKE &#39;mr_troop_%&#39;) ;&quot;</span><br><span class="line">        rows &#x3D; self.c.execute(execute)</span><br><span class="line">        lst_table_name &#x3D; []</span><br><span class="line">        for row in rows:</span><br><span class="line">            # row[0] like mr_friend_&#123;QQ号的MD5的16进制的字母大写&#125;_New</span><br><span class="line">            lst_table_name.append(row[0])</span><br><span class="line"></span><br><span class="line">        dir_name &#x3D; f&#39;&#123;dbfile&#125;.dir&#39;</span><br><span class="line"></span><br><span class="line">        if not os.path.exists(dir_name):</span><br><span class="line">            os.mkdir(dir_name)</span><br><span class="line"></span><br><span class="line">        for table_name in lst_table_name:</span><br><span class="line"></span><br><span class="line">            file &#x3D; dir_name+&#39;\\&#39; + table_name+&quot;.html&quot;</span><br><span class="line">            f2 &#x3D; open(file, &#39;w&#39;, encoding&#x3D;&quot;utf-8&quot;)</span><br><span class="line">            f2.write(</span><br><span class="line">                &quot;&lt;head&gt;&lt;meta http-equiv&#x3D;\&quot;Content-Type\&quot; content&#x3D;\&quot;text&#x2F;html; charset&#x3D;utf-8\&quot; &#x2F;&gt;&lt;&#x2F;head&gt;&quot;)</span><br><span class="line">            allmsg &#x3D; self.message(table_name)</span><br><span class="line">            for msg in allmsg:</span><br><span class="line">                if msg[2] !&#x3D; 0:</span><br><span class="line">                    try:</span><br><span class="line">                        f2.write(&quot;&lt;font color&#x3D;\&quot;blue\&quot;&gt;&quot;)</span><br><span class="line">                        f2.write(msg[0])</span><br><span class="line">                        f2.write(&quot;&lt;&#x2F;font&gt;-----&lt;font color&#x3D;\&quot;green\&quot;&gt;&quot;)</span><br><span class="line">                        f2.write(msg[1])</span><br><span class="line">                        f2.write(&quot;&lt;&#x2F;font&gt;&lt;&#x2F;br&gt;&quot;)</span><br><span class="line">                        f2.write(msg[2])</span><br><span class="line">                        f2.write(&quot;&lt;&#x2F;br&gt;&lt;&#x2F;br&gt;&quot;)</span><br><span class="line">                    except:</span><br><span class="line">                        pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    # config</span><br><span class="line">    # 储存QQ聊天信息的db文件，qq号.db 或者是 slowtable_qq号.db,记得把文件和py代码放在同目录</span><br><span class="line">    dbfile &#x3D; &#39;&#39;</span><br><span class="line">    # 解密的key,一般为IMEI,在files&#x2F;IMEI文件</span><br><span class="line">    key &#x3D; &#39;&#39;</span><br><span class="line"></span><br><span class="line">    q &#x3D; QQoutput(dbfile, key)</span><br><span class="line">    q.output(dbfile)</span><br></pre></td></tr></table></figure>
+
+<h2 id="slowtable-QQ号-db"><a href="#slowtable-QQ号-db" class="headerlink" title="slowtable_QQ号.db"></a>slowtable_QQ号.db</h2><p>slowtable_QQ号.db 储存了21天前的</p>
+<p>slowtable_QQ号.db 和 QQ号.db 的数据结构是基本一致的，所以可以直接使用上面的脚本</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>感谢下列参考链接做出的工作</p>
+<p><a href="https://github.com/roadwide/qqmessageoutput" target="_blank" rel="noopener">https://github.com/roadwide/qqmessageoutput</a></p>
+<p><a href="https://gist.github.com/recolic/02ba2e2dbae20f216c73b84baa91a39e" target="_blank" rel="noopener">https://gist.github.com/recolic/02ba2e2dbae20f216c73b84baa91a39e</a></p>
+<p><a href="https://github.com/Yiyiyimu/QQ_History_Backup" target="_blank" rel="noopener">https://github.com/Yiyiyimu/QQ_History_Backup</a></p>
+<p>另外，目前因为key的改变，没有实现后面2个数据库的记录提取，但是 <a href="https://github.com/Yiyiyimu/QQ_History_Backup" target="_blank" rel="noopener">https://github.com/Yiyiyimu/QQ_History_Backup</a> 中可以使用近期聊天记录进行提取，而近期聊天记录可以通过第一个数据库提取，这样就可以获得21天前的记录。不过目前我还没有实践 <a href="https://github.com/Yiyiyimu/QQ_History_Backup" target="_blank" rel="noopener">https://github.com/Yiyiyimu/QQ_History_Backup</a> 中的方法，所以只是作为思路参考。</p>
+<p>如果帮助到了你，请给个 star ：D <a href="https://github.com/117503445/qq_get_message" target="_blank" rel="noopener">https://github.com/117503445/qq_get_message</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-01-07T11:35:49.611Z" itemprop="dateUpdated">2021-01-07 11:35:49</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/github-detective.png" alt="117503445">
+            117503445
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/&title=《安卓QQ聊天记录提取指南》 — 117503445's Blog&pic=http://yoursite.com/img/github-detective.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/&title=《安卓QQ聊天记录提取指南》 — 117503445's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《安卓QQ聊天记录提取指南》 — 117503445's Blog&url=http://yoursite.com/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/04/29/2020-04-29-%E6%95%B0%E6%A8%A1%E7%BE%8E%E8%B5%9B%E8%BF%9C%E7%A8%8B%E5%8D%8F%E4%BD%9C%E5%B7%A5%E4%BD%9C%E6%A0%88/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">数模美赛远程协作工作栈</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Web 前后端的开发部署 - 概论</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+            <p>
+                
+                        <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+            </p>
+    </div>
+    <div class="bottom">
+        <p><span>117503445 &copy; 2020 - 2021</span>
+            <span>
+                
+                <a href="https://beian.miit.gov.cn" target="_blank">浙ICP备18051095号-2</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/&title=《安卓QQ聊天记录提取指南》 — 117503445's Blog&pic=http://yoursite.com/img/github-detective.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/&title=《安卓QQ聊天记录提取指南》 — 117503445's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《安卓QQ聊天记录提取指南》 — 117503445's Blog&url=http://yoursite.com/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Gin 与 Gorm 的极简 CRUD 示例 | 117503445&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="前言项目可见 https:&#x2F;&#x2F;github.com&#x2F;117503445&#x2F;GinCRUD 使用 Gin + Gorm 实现最基础的 CRUD,部分参考 https:&#x2F;&#x2F;blog.csdn.net&#x2F;u010129985&#x2F;article&#x2F;details&#x2F;81744357 并修改了其中的一些问题 最终效果在 &#x2F;api&#x2F;stories 提供 CRUD 接口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gin 与 Gorm 的极简 CRUD 示例">
+<meta property="og:url" content="http://yoursite.com/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/index.html">
+<meta property="og:site_name" content="117503445&#39;s Blog">
+<meta property="og:description" content="前言项目可见 https:&#x2F;&#x2F;github.com&#x2F;117503445&#x2F;GinCRUD 使用 Gin + Gorm 实现最基础的 CRUD,部分参考 https:&#x2F;&#x2F;blog.csdn.net&#x2F;u010129985&#x2F;article&#x2F;details&#x2F;81744357 并修改了其中的一些问题 最终效果在 &#x2F;api&#x2F;stories 提供 CRUD 接口">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/06/1yHj5F.png">
+<meta property="article:published_time" content="2020-02-06T13:23:00.000Z">
+<meta property="article:modified_time" content="2021-01-07T11:35:49.611Z">
+<meta property="article:author" content="117503445">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/02/06/1yHj5F.png">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/github-detective.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">117503445</h5>
+          <a href="mailto:t117503445@gmail.com" title="t117503445@gmail.com" class="mail">t117503445@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/117503445" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Gin 与 Gorm 的极简 CRUD 示例</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Gin 与 Gorm 的极简 CRUD 示例</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-02-06T13:23:00.000Z" itemprop="datePublished" class="page-time">
+  2020-02-06
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最终效果"><span class="post-toc-number">2.</span> <span class="post-toc-text">最终效果</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码解析"><span class="post-toc-number">3.</span> <span class="post-toc-text">代码解析</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2020-02-06-Gin 与 Gorm 的极简 CRUD 示例"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Gin 与 Gorm 的极简 CRUD 示例</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-02-06 13:23:00" datetime="2020-02-06T13:23:00.000Z"  itemprop="datePublished">2020-02-06</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目可见 <a href="https://github.com/117503445/GinCRUD" target="_blank" rel="noopener">https://github.com/117503445/GinCRUD</a></p>
+<p>使用 Gin + Gorm 实现最基础的 CRUD,部分参考</p>
+<p><a href="https://blog.csdn.net/u010129985/article/details/81744357" target="_blank" rel="noopener">https://blog.csdn.net/u010129985/article/details/81744357</a></p>
+<p>并修改了其中的一些问题</p>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><p>在 /api/stories 提供 CRUD 接口</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2020/02/06/1yHj5F.png" alt="历史事件" title="">
+                </div>
+                <div class="image-caption">历史事件</div>
+            </figure>
+
+<h2 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h2><p>先定义结构体</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//历史事件</span></span><br><span class="line"><span class="keyword">type</span> Story <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="comment">// ID is story's id</span></span><br><span class="line">    ID            <span class="keyword">int</span>    <span class="string">`json:"id"`</span></span><br><span class="line">    TimeStamp     <span class="keyword">int64</span>  <span class="string">`json:"timeStamp"`</span></span><br><span class="line">    Name          <span class="keyword">string</span> <span class="string">`json:"name"`</span></span><br><span class="line">    StoryDescribe <span class="keyword">string</span> <span class="string">`json:"storyDescribe"`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>数据库变量</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> db *gorm.DB</span><br></pre></td></tr></table></figure>
+
+<p>main函数中初始化数据库</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> err error</span><br><span class="line">db, err = gorm.Open(<span class="string">"sqlite3"</span>, <span class="string">"./Wizz-Home-Page.Database"</span>)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    log.Fatal(err)</span><br><span class="line">&#125;</span><br><span class="line">db.AutoMigrate(&amp;Story&#123;&#125;) <span class="comment">//数据库自动根据结构体建表</span></span><br></pre></td></tr></table></figure>
+
+<p>读取所有</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ReadStories</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> stories []Story</span><br><span class="line">    db.Find(&amp;stories)</span><br><span class="line">    c.JSON(<span class="number">200</span>, stories)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>读取单个</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ReadStory</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    id := c.Params.ByName(<span class="string">"id"</span>)</span><br><span class="line">    <span class="keyword">var</span> story Story</span><br><span class="line">    db.First(&amp;story, id)</span><br><span class="line">    <span class="keyword">if</span> story.ID == <span class="number">0</span> &#123;</span><br><span class="line">        c.JSON(<span class="number">404</span>, gin.H&#123;<span class="string">"message"</span>: <span class="string">"Story not found"</span>&#125;)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    c.JSON(<span class="number">200</span>, story)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CreateStory</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> story Story</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> err := c.BindJSON(&amp;story); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Println(err)</span><br><span class="line">        c.JSON(<span class="number">400</span>, <span class="string">"Not a Story"</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> story.ID != <span class="number">0</span> &#123;</span><br><span class="line">        c.JSON(<span class="number">400</span>, gin.H&#123;<span class="string">"message"</span>: <span class="string">"Pass id in body is not allowed"</span>&#125;)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    db.Create(&amp;story)</span><br><span class="line">    c.JSON(<span class="number">200</span>, story)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">UpdateStory</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    id, err := strconv.Atoi(c.Params.ByName(<span class="string">"id"</span>))</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        c.JSON(<span class="number">400</span>, gin.H&#123;<span class="string">"message"</span>: <span class="string">"your id is not a number"</span>&#125;)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> story Story</span><br><span class="line">    db.First(&amp;story, id)</span><br><span class="line">    <span class="keyword">if</span> story.ID == <span class="number">0</span> &#123;</span><br><span class="line">        c.JSON(<span class="number">404</span>, gin.H&#123;<span class="string">"message"</span>: <span class="string">"Story not found"</span>&#125;)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    err = c.ShouldBindJSON(&amp;story)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Println(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> story.ID != id &#123;</span><br><span class="line">        c.JSON(<span class="number">400</span>, gin.H&#123;<span class="string">"message"</span>: <span class="string">"Pass id in body is not allowed"</span>&#125;)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    db.Save(&amp;story)</span><br><span class="line">    c.JSON(<span class="number">200</span>, story)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>删除</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">DeleteStory</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    id, err := strconv.Atoi(c.Params.ByName(<span class="string">"id"</span>))</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        c.JSON(<span class="number">400</span>, gin.H&#123;<span class="string">"message"</span>: <span class="string">"your id is not a number"</span>&#125;)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> story Story</span><br><span class="line">    db.First(&amp;story, id)</span><br><span class="line">    <span class="keyword">if</span> story.ID == <span class="number">0</span> &#123;</span><br><span class="line">        c.JSON(<span class="number">404</span>, gin.H&#123;<span class="string">"message"</span>: <span class="string">"Story not found"</span>&#125;)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    db.Delete(&amp;story)</span><br><span class="line">    c.JSON(<span class="number">200</span>, gin.H&#123;<span class="string">"message"</span>: <span class="string">"delete success"</span>&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>添加路由</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">storyGroup := engine.Group(<span class="string">"/api/stories"</span>)</span><br><span class="line">storyGroup.GET(<span class="string">""</span>, ReadStories)</span><br><span class="line">storyGroup.GET(<span class="string">"/:id"</span>, ReadStory)</span><br><span class="line">storyGroup.POST(<span class="string">""</span>, CreateStory)</span><br><span class="line">storyGroup.PUT(<span class="string">"/:id"</span>, UpdateStory)</span><br><span class="line">storyGroup.DELETE(<span class="string">"/:id"</span>, DeleteStory)</span><br></pre></td></tr></table></figure>
+
+<p>运行服务端</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">err = engine.Run()</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    log.Fatal(err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-01-07T11:35:49.611Z" itemprop="dateUpdated">2021-01-07 11:35:49</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/github-detective.png" alt="117503445">
+            117503445
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/&title=《Gin 与 Gorm 的极简 CRUD 示例》 — 117503445's Blog&pic=http://yoursite.com/img/github-detective.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/&title=《Gin 与 Gorm 的极简 CRUD 示例》 — 117503445's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Gin 与 Gorm 的极简 CRUD 示例》 — 117503445's Blog&url=http://yoursite.com/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Web 前后端的开发部署 - 概论</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/02/04/2020-02-04-golang-swagger-api%20%E6%96%87%E6%A1%A3%E5%B7%A5%E5%85%B7%20swag%20%E5%9C%A8%20Windows%20%E4%B8%8B%E7%9A%84%E5%AE%89%E8%A3%85/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">golang-swagger-api 文档工具 Swag 在 Windows 下的安装</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+            <p>
+                
+                        <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+            </p>
+    </div>
+    <div class="bottom">
+        <p><span>117503445 &copy; 2020 - 2021</span>
+            <span>
+                
+                <a href="https://beian.miit.gov.cn" target="_blank">浙ICP备18051095号-2</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/&title=《Gin 与 Gorm 的极简 CRUD 示例》 — 117503445's Blog&pic=http://yoursite.com/img/github-detective.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/&title=《Gin 与 Gorm 的极简 CRUD 示例》 — 117503445's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Gin 与 Gorm 的极简 CRUD 示例》 — 117503445's Blog&url=http://yoursite.com/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

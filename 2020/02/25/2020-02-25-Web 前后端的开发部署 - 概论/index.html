@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Web 前后端的开发部署 - 概论 | 117503445&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="这个系列的 blog 完成了什么事情如何结合  前后端分离 域名 DNS HTTPS OSS 云服务器 REST 跨域 Docker Nginx 虚拟主机  完成一个小型 Web 项目的开发和部署。 架构每个 Web 网站的前端都放在云服务器的 OSS 上。 而所有网站的后端都运行在一个云主机上，通过 Nginx 的虚拟主机技术，根据不同的域名转发到不同的后端服务上。其中，每个后端服务和 Ngin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web 前后端的开发部署 - 概论">
+<meta property="og:url" content="http://yoursite.com/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/index.html">
+<meta property="og:site_name" content="117503445&#39;s Blog">
+<meta property="og:description" content="这个系列的 blog 完成了什么事情如何结合  前后端分离 域名 DNS HTTPS OSS 云服务器 REST 跨域 Docker Nginx 虚拟主机  完成一个小型 Web 项目的开发和部署。 架构每个 Web 网站的前端都放在云服务器的 OSS 上。 而所有网站的后端都运行在一个云主机上，通过 Nginx 的虚拟主机技术，根据不同的域名转发到不同的后端服务上。其中，每个后端服务和 Ngin">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-25T13:41:00.000Z">
+<meta property="article:modified_time" content="2021-01-07T11:35:49.611Z">
+<meta property="article:author" content="117503445">
+<meta name="twitter:card" content="summary">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/github-detective.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">117503445</h5>
+          <a href="mailto:t117503445@gmail.com" title="t117503445@gmail.com" class="mail">t117503445@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/117503445" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Web 前后端的开发部署 - 概论</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Web 前后端的开发部署 - 概论</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-02-25T13:41:00.000Z" itemprop="datePublished" class="page-time">
+  2020-02-25
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#这个系列的-blog-完成了什么事情"><span class="post-toc-number">1.</span> <span class="post-toc-text">这个系列的 blog 完成了什么事情</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#架构"><span class="post-toc-number">2.</span> <span class="post-toc-text">架构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优点"><span class="post-toc-number">3.</span> <span class="post-toc-text">优点</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-2020-02-25-Web 前后端的开发部署 - 概论"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Web 前后端的开发部署 - 概论</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-02-25 13:41:00" datetime="2020-02-25T13:41:00.000Z"  itemprop="datePublished">2020-02-25</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="这个系列的-blog-完成了什么事情"><a href="#这个系列的-blog-完成了什么事情" class="headerlink" title="这个系列的 blog 完成了什么事情"></a>这个系列的 blog 完成了什么事情</h2><p>如何结合</p>
+<ul>
+<li>前后端分离</li>
+<li>域名</li>
+<li>DNS</li>
+<li>HTTPS</li>
+<li>OSS</li>
+<li>云服务器</li>
+<li>REST</li>
+<li>跨域</li>
+<li>Docker</li>
+<li>Nginx</li>
+<li>虚拟主机</li>
+</ul>
+<p>完成一个小型 Web 项目的开发和部署。</p>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p>每个 Web 网站的前端都放在云服务器的 OSS 上。</p>
+<p>而所有网站的后端都运行在一个云主机上，通过 Nginx 的虚拟主机技术，根据不同的域名转发到不同的后端服务上。其中，每个后端服务和 Nginx 都使用 Docker 进行部署，便于管理，不污染系统环境。</p>
+<p>前后端通过 REST API 完成通信，同时后端做好跨域设置。</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<li><p>前后端分离，在开发时只以接口文档作为依据，可以分离开发。同时可以分离部署。</p>
+</li>
+<li><p>前端通过 OSS 的加速，能够以非常快的速度加载。价格也很友好，每个月每GB只用几毛钱。又拍云还有免费的 OSS 空间。</p>
+</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-01-07T11:35:49.611Z" itemprop="dateUpdated">2021-01-07 11:35:49</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/github-detective.png" alt="117503445">
+            117503445
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/&title=《Web 前后端的开发部署 - 概论》 — 117503445's Blog&pic=http://yoursite.com/img/github-detective.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/&title=《Web 前后端的开发部署 - 概论》 — 117503445's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Web 前后端的开发部署 - 概论》 — 117503445's Blog&url=http://yoursite.com/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/03/19/2020-03-19-%E5%AE%89%E5%8D%93QQ%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E6%8F%90%E5%8F%96%E6%8C%87%E5%8D%97/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">安卓QQ聊天记录提取指南</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/02/06/2020-02-06-Gin%20%E4%B8%8E%20Gorm%20%E7%9A%84%E6%9E%81%E7%AE%80%20CRUD%20%E7%A4%BA%E4%BE%8B/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Gin 与 Gorm 的极简 CRUD 示例</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+            <p>
+                
+                        <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+            </p>
+    </div>
+    <div class="bottom">
+        <p><span>117503445 &copy; 2020 - 2021</span>
+            <span>
+                
+                <a href="https://beian.miit.gov.cn" target="_blank">浙ICP备18051095号-2</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/&title=《Web 前后端的开发部署 - 概论》 — 117503445's Blog&pic=http://yoursite.com/img/github-detective.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/&title=《Web 前后端的开发部署 - 概论》 — 117503445's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Web 前后端的开发部署 - 概论》 — 117503445's Blog&url=http://yoursite.com/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2020/02/25/2020-02-25-Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E7%9A%84%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%20-%20%E6%A6%82%E8%AE%BA/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
